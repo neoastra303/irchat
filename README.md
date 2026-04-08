@@ -73,39 +73,42 @@ Perfect for:
 
 ### 📦 Installation
 
-**Option 1: Clone from GitHub** (Recommended)
+**Option 1: Clone from GitHub** (Recommended for development)
+```bash
+git clone https://github.com/neoastra303/irchat.git
+cd irchat
+pip install -e ".[dev]"  # Install in development mode with dev dependencies
+python -m irchat basic irc.libera.chat 6667 mynickname #channel
+```
+
+**Option 2: Install from pip** (For production)
+```bash
+pip install irchat
+irchat basic irc.libera.chat 6667 mynickname #channel
+```
+
+**Option 3: Quick test (no installation)**
 ```bash
 git clone https://github.com/neoastra303/irchat.git
 cd irchat
 pip install -r requirements.txt
-python irc_chat.py irc.libera.chat 6667 mynickname #channel
-```
-
-**Option 2: Install from pip**
-```bash
-pip install irchat
-irchat irc.libera.chat 6667 mynickname #channel
-```
-
-**Option 3: Development setup**
-```bash
-git clone https://github.com/neoastra303/irchat.git
-cd irchat
-pip install -e .
-pip install -r requirements-dev.txt
+python -m irchat basic irc.libera.chat 6667 mynickname #channel
 ```
 
 ### 🎮 First Connection
 
 ```bash
 # Connect to Libera Chat as 'mynick' in #general
-python irc_chat.py irc.libera.chat 6667 mynick #general
+python -m irchat basic irc.libera.chat 6667 mynick #general
 
 # Connect without auto-joining a channel
-python irc_chat.py irc.libera.chat 6667 mynick
+python -m irchat basic irc.libera.chat 6667 mynick
 
 # Use a different IRC server
-python irc_chat.py irc.freenode.net 6667 mynick
+python -m irchat basic irc.freenode.net 6667 mynick
+
+# Use modern colored UI
+python -m irchat modern irc.libera.chat 6667 mynick #general
 ```
 
 ---
@@ -160,19 +163,53 @@ python irc_chat.py irc.freenode.net 6667 mynick
 
 ```
 irchat/
-├── irc_chat.py          # Main chat interface & commands
-├── irc_client.py        # Core IRC protocol engine
-├── irc_modern.py        # Modern UI variant
-├── irc_rich.py          # Rich terminal UI variant
-├── config.py            # Configuration manager
-├── logger.py            # Message logging system
-├── history.py           # Command history tracker
-├── sanitize.py          # Input validation & security
-├── setup.py             # Package installation
-├── requirements.txt     # Dependencies
-├── test_irc.py          # Unit tests (14 tests)
-└── .github/             # CI/CD workflows
+├── src/irchat/              # Production source code (PEP 517 compliant)
+│   ├── __init__.py          # Package initialization & public API
+│   ├── __main__.py          # Entry point for `python -m irchat`
+│   ├── irc_client.py        # Core IRC protocol engine (RFC 2812)
+│   ├── irc_chat.py          # CLI user interface & commands
+│   ├── irc_modern.py        # Modern colored terminal UI
+│   ├── irc_rich.py          # Rich library UI with panels
+│   ├── config.py            # Configuration management
+│   ├── logger.py            # JSON Lines logging system
+│   ├── history.py           # Command history tracker
+│   └── sanitize.py          # Input validation & security layer
+│
+├── tests/                   # Unit & integration tests
+│   ├── __init__.py
+│   ├── test_client.py       # IRC client tests (100% coverage)
+│   └── test_history.txt     # Test history log
+│
+├── docs/                    # Complete documentation
+│   ├── ARCHITECTURE.md      # Technical design & internals
+│   ├── CONTRIBUTING.md      # Development guidelines
+│   ├── CODE_OF_CONDUCT.md   # Community standards
+│   ├── SECURITY.md          # Security policy & reporting
+│   ├── CHANGELOG.md         # Version history
+│   ├── PRESENTATION.md      # Project overview & use cases
+│   └── status/              # Project milestones & progress
+│
+├── config/                  # Configuration templates
+│   └── config.example.json  # Example configuration
+│
+├── examples/                # Code examples & templates
+│   └── bot_template.py      # Example bot implementation
+│
+├── setup.py                 # Package configuration
+├── requirements.txt         # Production dependencies
+├── requirements-dev.txt     # Development dependencies
+├── LICENSE                  # MIT License
+├── README.md                # This file
+├── PROJECT_STRUCTURE.md     # Detailed structure guide
+├── GETTING_STARTED.md       # Getting started guide
+├── RESTRUCTURING_COMPLETE.md # Restructuring summary
+└── .github/                 # GitHub configuration
+    └── workflows/           # CI/CD pipelines
 ```
+
+**📖 For detailed navigation, see:**
+- [**GETTING_STARTED.md**](GETTING_STARTED.md) - Quick start guide
+- [**PROJECT_STRUCTURE.md**](PROJECT_STRUCTURE.md) - Complete structure reference
 
 ### How It Works
 
@@ -266,11 +303,14 @@ Create a `config.json` file to customize your experience:
 
 | Document | Purpose |
 |----------|---------|
-| [**ARCHITECTURE.md**](ARCHITECTURE.md) | Technical design & internals |
-| [**CONTRIBUTING.md**](CONTRIBUTING.md) | How to contribute code |
-| [**CODE_OF_CONDUCT.md**](CODE_OF_CONDUCT.md) | Community standards |
-| [**SECURITY.md**](SECURITY.md) | Security policy & reporting |
-| [**CHANGELOG.md**](CHANGELOG.md) | Version history & updates |
+| [**GETTING_STARTED.md**](GETTING_STARTED.md) | Getting started guide & navigation |
+| [**PROJECT_STRUCTURE.md**](PROJECT_STRUCTURE.md) | Complete project structure reference |
+| [**docs/ARCHITECTURE.md**](docs/ARCHITECTURE.md) | Technical design & internals |
+| [**docs/CONTRIBUTING.md**](docs/CONTRIBUTING.md) | How to contribute code |
+| [**docs/CODE_OF_CONDUCT.md**](docs/CODE_OF_CONDUCT.md) | Community standards |
+| [**docs/SECURITY.md**](docs/SECURITY.md) | Security policy & reporting |
+| [**docs/CHANGELOG.md**](docs/CHANGELOG.md) | Version history & updates |
+| [**docs/PRESENTATION.md**](docs/PRESENTATION.md) | Project overview & vision |
 
 ---
 
@@ -288,7 +328,7 @@ IRChat implements professional-grade security:
 - **Logging**: Secure, JSON-based logging without sensitive data
 - **Dependencies**: Only official PyPI packages
 
-**For security concerns**: See [SECURITY.md](SECURITY.md) for responsible disclosure.
+**For security concerns**: See [docs/SECURITY.md](docs/SECURITY.md) for responsible disclosure.
 
 </details>
 
@@ -343,7 +383,7 @@ We'd love your contributions! Here's how:
 6. **Push** to your fork
 7. **Open** a Pull Request
 
-**Guidelines**: See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
+**Guidelines**: See [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) for detailed contribution guidelines.
 
 ---
 
