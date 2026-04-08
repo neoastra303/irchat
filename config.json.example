@@ -1,0 +1,23 @@
+{
+  "servers": {
+    "libera": {
+      "host": "irc.libera.chat",
+      "port": 6667
+    },
+    "freenode": {
+      "host": "irc.freenode.net",
+      "port": 6667
+    },
+    "efnet": {
+      "host": "irc.efnet.org",
+      "port": 6667
+    }
+  },
+  "logging": {
+    "enabled": false,
+    "directory": "chat_history"
+  },
+  "ui": {
+    "max_buffer": 100
+  }
+}

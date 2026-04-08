@@ -1,0 +1,25 @@
+# Development Dependencies
+# Install with: pip install -r requirements-dev.txt
+
+# Testing
+pytest>=6.0.0
+pytest-cov>=2.12.0
+coverage>=5.5
+
+# Code Quality
+pylint>=2.9.0
+flake8>=3.9.0
+mypy>=0.910
+black>=21.6
+isort>=5.9.0
+
+# Security
+bandit>=1.7.0
+safety>=1.10.0
+
+# Documentation
+sphinx>=4.0.0
+sphinx-rtd-theme>=1.0.0
+
+# Optional UI
+rich>=13.0.0
