@@ -60,12 +60,14 @@ Perfect for:
 </table>
 
 ### 🎨 Interface Features
-- 🌈 Rich terminal UI with colors
+- 🌈 **Modern terminal UI** inspired by Gemini CLI & gcloud (NEW!)
+- 💅 Professional color scheme with 256-color support
 - ⌨️ Command history & readline support
 - 🔍 User presence & status tracking
-- 📊 Message buffer (last 100 messages)
-- 🎭 Action messages (`/me <action>`)
-- 📝 Configurable logging & history
+- 📊 Message buffer with scroll indicators
+- 🎭 Rich message formatting with icons
+- 📊 Real-time status bar with ping/latency
+- ✨ Animated spinners for operations
 
 ---
 
@@ -78,13 +80,13 @@ Perfect for:
 git clone https://github.com/neoastra303/irchat.git
 cd irchat
 pip install -e ".[dev]"  # Install in development mode with dev dependencies
-python -m irchat basic irc.libera.chat 6667 mynickname #channel
+python -m irchat irc.libera.chat 6667 mynickname #channel
 ```
 
 **Option 2: Install from pip** (For production)
 ```bash
 pip install irchat
-irchat basic irc.libera.chat 6667 mynickname #channel
+irchat irc.libera.chat 6667 mynickname #channel
 ```
 
 **Option 3: Quick test (no installation)**
@@ -92,24 +94,87 @@ irchat basic irc.libera.chat 6667 mynickname #channel
 git clone https://github.com/neoastra303/irchat.git
 cd irchat
 pip install -r requirements.txt
+python -m irchat irc.libera.chat 6667 mynickname #channel
+```
+
+### 🎮 First Connection (Modern UI - Default)
+
+```bash
+# Modern terminal UI (recommended)
+python -m irchat irc.libera.chat 6667 mynickname #channel
+
+# Or with explicit mode
+python -m irchat modern irc.libera.chat 6667 mynickname #channel
+
+# Switch to basic CLI if needed
 python -m irchat basic irc.libera.chat 6667 mynickname #channel
 ```
 
-### 🎮 First Connection
+### 🎮 First Connection (Legacy Basic UI)
 
 ```bash
-# Connect to Libera Chat as 'mynick' in #general
-python -m irchat basic irc.libera.chat 6667 mynick #general
+# Connect to Libera Chat as 'mynick' in #general (modern UI - recommended)
+python -m irchat irc.libera.chat 6667 mynick #general
 
 # Connect without auto-joining a channel
-python -m irchat basic irc.libera.chat 6667 mynick
+python -m irchat irc.libera.chat 6667 mynick
 
-# Use a different IRC server
-python -m irchat basic irc.freenode.net 6667 mynick
+# Use a different IRC server (modern UI)
+python -m irchat irc.efnet.org 6667 mynick
 
-# Use modern colored UI
-python -m irchat modern irc.libera.chat 6667 mynick #general
+# Use legacy basic CLI mode
+python -m irchat basic irc.libera.chat 6667 mynick #general
 ```
+
+---
+
+## 🎨 Modern Terminal UI
+
+IRChat features a **professional, modern terminal interface** inspired by Gemini CLI and other modern developer tools.
+
+### Features
+
+- **Colorful output** with vibrant colors and professional palette
+- **Message formatting** with icons for different message types (💬 user, 📨 PM, ✓ system)
+- **Status bar** showing connection info, ping, and current channels
+- **Animated spinners** for operations (joining channels, changing nick)
+- **Rich timestamps** with precise hour:minute:second format
+- **Smart input prompt** that shows current channel and nickname
+
+### Example Output
+
+```
+┌─────────────────────────────────────────┐
+│  💬 IRChat - Modern Terminal IRC Client  │
+│     Professional. Fast. Secure.          │
+└─────────────────────────────────────────┘
+
+● Server: irc.libera.chat  │  Nick: alice  │  Channels: #python  │  Ping: 48ms
+────────────────────────────────────────────────────────────────────────────────
+
+12:34:56  ⚙  Server: Successfully connected to IRC server
+12:35:01  →  bob joined #python
+12:35:05  💬  bob: Hello everyone!
+12:35:10  💬  alice: Hi Bob, welcome!
+
+[#python]  alice  →
+```
+
+### UI Modes
+
+| Mode | Features | Best For |
+|------|----------|----------|
+| **modern** (default) | Colors, formatting, animations | Most users (recommended) |
+| **basic** | Simple text, minimal colors | Lightweight, remote access |
+| **rich** | Advanced panels, tables | Feature-rich experience |
+
+### More Information
+
+See **[docs/MODERN_UI_GUIDE.md](docs/MODERN_UI_GUIDE.md)** for complete guide on:
+- Customizing colors
+- Using UI components in code
+- Troubleshooting terminal issues
+- Command examples
 
 ---
 
@@ -125,6 +190,8 @@ python -m irchat modern irc.libera.chat 6667 mynick #general
 | **`/nick`** | `/nick newnick` | Change your nickname instantly |
 | **`/me`** | `/me does something` | Send an action message |
 | **`/users`** | `/users [#channel]` | See who's online |
+| **`/channels`** | `/channels` | List all joined channels |
+| **`/status`** | `/status` | Show connection status |
 | **`/clear`** | `/clear` | Clear message screen |
 | **`/help`** | `/help` | Show command help |
 | **`/quit`** | `/quit` | Disconnect & exit |
@@ -151,6 +218,12 @@ python -m irchat modern irc.libera.chat 6667 mynick #general
 # See who's in the channel
 /users
 
+# See all your channels
+/channels
+
+# Check connection status
+/status
+
 # Leave when done
 /quit
 ```
@@ -163,26 +236,29 @@ python -m irchat modern irc.libera.chat 6667 mynick #general
 
 ```
 irchat/
-├── src/irchat/              # Production source code (PEP 517 compliant)
-│   ├── __init__.py          # Package initialization & public API
-│   ├── __main__.py          # Entry point for `python -m irchat`
-│   ├── irc_client.py        # Core IRC protocol engine (RFC 2812)
-│   ├── irc_chat.py          # CLI user interface & commands
-│   ├── irc_modern.py        # Modern colored terminal UI
-│   ├── irc_rich.py          # Rich library UI with panels
-│   ├── config.py            # Configuration management
-│   ├── logger.py            # JSON Lines logging system
-│   ├── history.py           # Command history tracker
-│   └── sanitize.py          # Input validation & security layer
+├── src/irchat/                    # Production source code (PEP 517 compliant)
+│   ├── __init__.py                # Package initialization & public API
+│   ├── __main__.py                # Entry point for `python -m irchat`
+│   ├── irc_client.py              # Core IRC protocol engine (RFC 2812)
+│   ├── irc_chat.py                # Basic CLI user interface
+│   ├── irc_chat_modern.py         # Modern terminal UI interface (NEW!)
+│   ├── irc_modern.py              # Colored terminal UI (legacy)
+│   ├── irc_rich.py                # Rich library UI with panels
+│   ├── ui_modern.py               # Modern UI components library (NEW!)
+│   ├── config.py                  # Configuration management
+│   ├── logger.py                  # JSON Lines logging system
+│   ├── history.py                 # Command history tracker
+│   └── sanitize.py                # Input validation & security layer
 │
-├── tests/                   # Unit & integration tests
+├── tests/                         # Unit & integration tests
 │   ├── __init__.py
-│   ├── test_client.py       # IRC client tests (100% coverage)
-│   └── test_history.txt     # Test history log
+│   ├── test_client.py             # IRC client tests (100% coverage)
+│   └── test_history.txt           # Test history log
 │
-├── docs/                    # Complete documentation
-│   ├── ARCHITECTURE.md      # Technical design & internals
-│   ├── CONTRIBUTING.md      # Development guidelines
+├── docs/                          # Complete documentation
+│   ├── ARCHITECTURE.md            # Technical design & internals
+│   ├── MODERN_UI_GUIDE.md         # Modern UI guide (NEW!)
+│   ├── CONTRIBUTING.md            # Development guidelines
 │   ├── CODE_OF_CONDUCT.md   # Community standards
 │   ├── SECURITY.md          # Security policy & reporting
 │   ├── CHANGELOG.md         # Version history
