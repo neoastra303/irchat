@@ -2,10 +2,10 @@ import os
 import sys
 import time
 from datetime import datetime
-from irc_client import IRCClient
-from config import ConfigManager
-from logger import MessageLogger
-from history import CommandHistory
+from .irc_client import IRCClient
+from .config import ConfigManager
+from .logger import MessageLogger
+from .history import CommandHistory
 from typing import Optional
 
 class IRCInterface:

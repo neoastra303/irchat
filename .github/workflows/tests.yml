@@ -31,7 +31,7 @@ jobs:
     
     - name: Run unit tests
       run: |
-        python test_irc.py -v
+        python -m pytest tests/ -v
     
     - name: Run pylint
       run: |
@@ -47,7 +47,7 @@ jobs:
     
     - name: Generate coverage report
       run: |
-        coverage run -m unittest test_irc.py
+        coverage run -m pytest tests/
         coverage report
         coverage xml
     

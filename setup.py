@@ -22,7 +22,8 @@ setup(
         "Documentation": "https://github.com/neoastra303/irchat#readme",
         "Source Code": "https://github.com/neoastra303/irchat",
     },
-    packages=find_packages(),
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     classifiers=[
         "Development Status :: 4 - Beta",
         "Environment :: Console",
@@ -59,7 +60,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "irchat=run:main",
+            "irchat=irchat.__main__:main",
         ],
     },
     keywords=[

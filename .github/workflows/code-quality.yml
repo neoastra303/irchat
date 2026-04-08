@@ -27,20 +27,20 @@ jobs:
     
     - name: Check code formatting with Black
       run: |
-        black --check . --exclude venv
+        black --check src/ tests/ --exclude venv
     
     - name: Check import sorting with isort
       run: |
-        isort --check-only .
+        isort --check-only src/ tests/
     
     - name: Run flake8 linting
       run: |
-        flake8 . --count --show-source --statistics --exclude=venv,.git,__pycache__
+        flake8 src/ tests/ --count --show-source --statistics --exclude=venv,.git,__pycache__
     
     - name: Run pylint
       run: |
-        pylint *.py --exit-zero --disable=C,W
+        pylint src/irchat/ tests/ --exit-zero --disable=C,W
     
     - name: Type check with mypy
       run: |
-        mypy *.py --ignore-missing-imports --show-error-codes
+        mypy src/irchat/ --ignore-missing-imports --show-error-codes

@@ -1,5 +1,11 @@
 import unittest
-from irc_client import IRCClient
+import sys
+from pathlib import Path
+
+# Add src directory to path for imports
+sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
+
+from irchat.irc_client import IRCClient
 
 class TestIRCProtocol(unittest.TestCase):
     

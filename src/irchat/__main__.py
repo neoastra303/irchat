@@ -61,17 +61,17 @@ Examples:
     
     # Route to appropriate UI
     if ui_mode == 'basic':
-        from irc_chat import IRCInterface
+        from .irc_chat import IRCInterface
         interface = IRCInterface()
         interface.run(server, port, nickname, channel)
     elif ui_mode == 'modern':
         print("Note: Modern UI requires manual setup. Use 'irc_modern.py' directly.")
-        from irc_chat import IRCInterface
+        from .irc_chat import IRCInterface
         interface = IRCInterface()
         interface.run(server, port, nickname, channel)
     elif ui_mode == 'rich':
         print("Note: Rich UI requires 'rich' package. Use 'irc_rich.py' directly.")
-        from irc_chat import IRCInterface
+        from .irc_chat import IRCInterface
         interface = IRCInterface()
         interface.run(server, port, nickname, channel)
 
