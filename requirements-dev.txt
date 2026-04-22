@@ -4,7 +4,7 @@
 # Testing
 pytest>=6.0.0
 pytest-cov>=2.12.0
-coverage>=5.5
+coverage>=7.10.7
 
 # Code Quality
 pylint>=2.9.0
