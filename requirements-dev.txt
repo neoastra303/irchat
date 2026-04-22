@@ -8,7 +8,7 @@ coverage>=5.5
 
 # Code Quality
 pylint>=2.9.0
-flake8>=3.9.0
+flake8>=7.3.0
 mypy>=0.910
 black>=21.6
 isort>=5.9.0
